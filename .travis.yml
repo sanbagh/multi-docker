@@ -1,15 +1,20 @@
-# language: generic
-# services:
-#   - docker
-# before_install:
-#   - docker build -t sanbagh/multi-test -f ./client/Dockerfile.dev ./client
-# script:
-#   - docker run -e CI=true sanbagh/multi-test npm run test
-# after_success:
-#   - docker build -t sanbagh/multi-client ./client
-#   - docker build -t sanbagh/multi-nginx ./nginx
-#   - docker build -t sanbagh/multi-server ./server
-#   - docker build -t sanbagh/multi-worker ./worker
+language: generic
+services:
+  - docker
+before_install:
+  - docker build -t sanbagh/multi-test -f ./client/Dockerfile.dev ./client
+script:
+  - docker run -e CI=true sanbagh/multi-test npm run test
+after_success:
+  - docker build -t sanbagh/multi-client ./client
+  - docker build -t sanbagh/multi-nginx ./nginx
+  - docker build -t sanbagh/multi-server ./server
+  - docker build -t sanbagh/multi-worker ./worker
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - docker push sanbagh/multi-client
+  - docker push sanbagh/multi-nginx
+  - docker push sanbagh/multi-server
+  - docker push sanbagh/multi-worker
 # deploy:
 #   provider: heroku
 #   api_key: $HEROKU_API_KEY
