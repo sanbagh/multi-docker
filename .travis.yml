@@ -1,0 +1,17 @@
+# language: generic
+# services:
+#   - docker
+# before_install:
+#   - docker build -t sanbagh/multi-test -f ./client/Dockerfile.dev ./client
+# script:
+#   - docker run -e CI=true sanbagh/multi-test npm run test
+# after_success:
+#   - docker build -t sanbagh/multi-client ./client
+#   - docker build -t sanbagh/multi-nginx ./nginx
+#   - docker build -t sanbagh/multi-server ./server
+#   - docker build -t sanbagh/multi-worker ./worker
+# deploy:
+#   provider: heroku
+#   api_key: $HEROKU_API_KEY
+#   app: sanbagh-docker-react-2
+#   on: master
